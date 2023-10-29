@@ -49,18 +49,28 @@
 <div class="form">
     <form action="#" class="sub-form">
         <div class="upper-form">
-            <h2>Faça o Login</h2>
+            <form action="/enviar-dados" method="post"></form>
+            <h2>Faça seu registro</h2>
+            <label>Nome</label> <br>
+            <input type="text" name="nome"> <br>
+            <label>Sobrenome</label> <br>
+            <input type="password" name="sobrenome"> <br>
+            <label>Idade</label> <br>
+            <input type="text" name="idade"> <br>
+            <label>CPF (sem o digito)</label> <br>
+            <input type="text" name="cpf"> <br>
+            <label>Email</label> <br>
+            <input type="text" name="email"> <br>
+            <label>Endereço (opcional)</label> <br>
+            <input type="text" name="endereco"> <br>
             <label>Usuário</label> <br>
-            <input type="text" name="username"> <br>
+            <input type="text" name="usuario"> <br>
             <label>Senha</label> <br>
-            <input type="password" name="password"> <br>
+            <input type="text" name="senha"> <br>
             <div class="btn">
-                <button type="submit">Login</button> <br>
+                <button type="submit">Enviar</button> <br>
             </div>
         </div>
-        <div class="bottom-form">
-            <div class="no-account">Ainda não tem uma conta?</div>
-            <a href="#" class="signup">Inscreva-se</a>
         </div>
     </form>
 </div>  
