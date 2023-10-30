@@ -12,7 +12,7 @@
 }
 
 .parent-link {
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .parent-link, .icon {
@@ -35,7 +35,7 @@
     color: gray;
     font-weight: 500;
     text-decoration: none;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Nunito', sans-serif;
 }
 
 .social-links:hover {
@@ -113,7 +113,7 @@ input:focus {
 }
 
 button {
-    padding: 12px 48px;
+    padding: 10px 48px;
     border-radius: 50px;
     color: white;
     margin-top: 1rem;
@@ -243,3 +243,4 @@ body {
     align-items: center;
     margin: 0; /* Remova a margem para a logo */
 }
+

@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="assets/icone park easy.ico" />
     <link rel="stylesheet" href="css/login.css">
     <!-- Login Page by The Code Donkey -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
@@ -19,28 +20,45 @@
             <form action="http://localhost:3000/enviar-dados" method="post" class="sub-cadastro">
                 <div class="upper-cadastro">
                     <h2>Faça seu registro</h2>
-                    <label for="nome">Nome</label> <br>
-                    <input type="text" id="Nome" name="Nome" required> <br>
-                    <label for="sobrenome">Sobrenome</label> <br>
-                    <input type="text" id="Sobrenome" name="Sobrenome" required> <br>
-                    <label for="idade">Idade</label> <br>
-                    <input type="number" id="Idade" name="Idade" required> <br>
-                    <label for="cpf">CPF (sem o dígito)</label> <br>
-                    <input type="text" id="CPF" name="CPF" required> <br>
-                    <label for="email">Email</label> <br>
-                    <input type="email" id="email" name="Email" required> <br>
-                    <label for="endereco">Endereço (opcional)</label> <br>
-                    <input type="text" id="Endereço" name="Endereço"> <br>
-                    <label for="usuario">Usuário</label> <br>
-                    <input type="text" id="Usuário" name="Usuário" required> <br>
-                    <label for="senha">Senha</label> <br>
-                    <input type="password" id="Senha" name="Senha" required> <br>
+                <label for="nome">Nome</label> <br>
+                <input type="text" id="Nome" name="Nome" required placeholder="Insira seu nome"> <br>
+
+                <label for="sobrenome">Sobrenome</label> <br>
+                <input type="text" id="Sobrenome" name="Sobrenome" required placeholder="Insira seu sobrenome"> <br>
+
+                <label for="idade">Idade</label> <br>
+                <input type="number" id="Idade" name="Idade" required placeholder="Insira sua idade"> <br>
+
+                <label for="cpf">CPF (sem o dígito)</label> <br>
+                <input type="text" id="CPF" name="CPF" required placeholder="Insira seu CPF (apenas números)"> <br>
+
+                <label for="email">Email</label> <br>
+                <input type="email" id="email" name="Email" required placeholder="Insira seu endereço de email"> <br>
+
+                <label for="endereco">Endereço (opcional)</label> <br>
+                <input type="text" id="endereco" name="Endereço" placeholder="Insira seu endereço"> <br>
+
+                <label for="usuario">Usuário</label> <br>
+                <input type="text" id="Usuário" name="Usuário" required placeholder="Escolha um nome de usuário"> <br>
+
+                <label for="senha">Senha</label> <br>
+                <input type="password" id="Senha" name="Senha" required placeholder="Escolha uma senha segura"> <br>
+
                     <div class="btn">
                         <button type="submit">Enviar</button> <br>
                     </div>
                 </div>
             </form>
         </div>
+        <script>
+            function initMap() {
+                const input = document.getElementById("endereco");
+                const autocomplete = new google.maps.places.Autocomplete(input);
+            }
+        </script>
+        <script>
+            initMap(); // Inicialize a API quando a página for carregada
+        </script>        
 </body>
 
 </html>
