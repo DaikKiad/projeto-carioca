@@ -27,7 +27,7 @@ app.post('/enviar-dados', (req, res) => {
     const { Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha } = req.body;
     
     // Insira os dados no banco de dados
-    const sql = 'INSERT INTO tabela (Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO usuario (Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     db.query(sql, [Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha], (err, result) => {
         if (err) {
             console.error('Erro ao inserir dados: ' + err);
