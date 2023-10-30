@@ -25,7 +25,7 @@ db.connect(err => {
 // Rota para receber os dados do formulário
 app.post('/enviar-dados', (req, res) => {
     const { Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha } = req.body;
-    
+
     // Insira os dados no banco de dados
     const sql = 'INSERT INTO usuario (Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     db.query(sql, [Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha], (err, result) => {

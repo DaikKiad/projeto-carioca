@@ -150,6 +150,7 @@ button:hover {
     display: flex;
     justify-content: center;
     padding-top: 3rem;
+    padding-bottom: 3rem;
 }
 
 .sub-cadastro {
@@ -157,7 +158,7 @@ button:hover {
     flex-direction: column;
     align-items: center;
     width: 30vw;
-    height: 70vh;
+    height: 115vh;
     border-radius: 12px;
     box-shadow: rgba(50, 50, 93, 0,25) 0px 13px 27px -5px,
      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
@@ -221,4 +222,24 @@ button:hover {
 
 .signup:hover {
     opacity: 0.8;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.logo-and-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    height: 100vh; /* Garante que a altura da página ocupe a altura total da janela */
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    margin: 0; /* Remova a margem para a logo */
 }
