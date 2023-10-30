@@ -8,14 +8,15 @@
     <link rel="icon" type="image/x-icon" href="assets/icone park easy.ico" />
     <link rel="stylesheet" href="css/login.css">
     <!-- Login Page by The Code Donkey -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjEo82Xjk5XfFV1qv8E2wY3SIio32ahSA&libraries=places"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
-    <div class="logo-and-form">
-        <a class="navbar-brand" href="./index.html"><img src="assets\img/icone park easy.png" alt="logo"></a>
+    <div class="header">
+        <a href="login.html"><- Voltar ao Login</a>
+    </div>
         <div class="cadastro">
             <form action="http://localhost:3000/enviar-dados" method="post" class="sub-cadastro">
                 <div class="upper-cadastro">
@@ -44,12 +45,13 @@
                 <label for="senha">Senha</label> <br>
                 <input type="password" id="Senha" name="Senha" required placeholder="Escolha uma senha segura"> <br>
 
-                    <div class="btn">
-                        <button type="submit">Enviar</button> <br>
-                    </div>
+            </div>
+            <div class="btn">
+                <button type="submit">Enviar</button> <br>
                 </div>
             </form>
         </div>
+
         <script>
             function initMap() {
                 const input = document.getElementById("endereco");

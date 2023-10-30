@@ -73,6 +73,7 @@ body {
     display: flex;
     justify-content: center;
     padding-top: 3rem;
+    margin-bottom: 0;
 }
 
 .sub-form {
@@ -116,7 +117,8 @@ button {
     padding: 10px 48px;
     border-radius: 50px;
     color: white;
-    margin-top: 1rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
     cursor: pointer;
     outline: none;
     border-width: 0;
@@ -148,21 +150,33 @@ button:hover {
 
 .cadastro {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-bottom: 40px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.upper-cadastro {
+    padding-top: 0;
+
 }
 
 .sub-cadastro {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 30vw;
-    height: 115vh;
+    height: auto;
     border-radius: 12px;
-    box-shadow: rgba(50, 50, 93, 0,25) 0px 13px 27px -5px,
-     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-     background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+      rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    background-color: white;
 }
 
 h2 {
@@ -194,7 +208,8 @@ button {
     padding: 12px 48px;
     border-radius: 50px;
     color: white;
-    margin-top: 1rem;
+    margin-top: 20px;
+    margin-bottom: 0rem;
     cursor: pointer;
     outline: none;
     border-width: 0;
@@ -227,6 +242,30 @@ button:hover {
 body {
     margin: 0;
     padding: 0;
+    background-image: url('/assets/img/fundo\ login.png');
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} 
+
+.header {
+    position: absolute;
+    top: 50px; /* Ajuste conforme necessário para posicionar o botão na altura desejada */
+    left: 50px; /* Ajuste conforme necessário para posicionar o botão na largura desejada */
+}
+
+.header a {
+    padding: 0 2.5rem;
+    margin: 0;
+    color: rgb(250, 248, 248);
+    font-weight: bold;
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 20px;
 }
 
 .logo-and-form {
@@ -243,4 +282,3 @@ body {
     align-items: center;
     margin: 0; /* Remova a margem para a logo */
 }
-
