@@ -11309,3 +11309,8 @@ body {
   }
 }
 
+.cadastro {
+  padding: 60px; /* Aumenta o preenchimento interno do formulário */
+  border: 2px solid #000; /* Adiciona uma borda sólida de 2px em torno do formulário */
+  margin: 20px; /* Define a margem externa do formulário */
+}
