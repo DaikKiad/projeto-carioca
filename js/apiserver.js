@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const path = require('path');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,11 +32,21 @@ app.post('/enviar-dados', (req, res) => {
     db.query(sql, [Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha], (err, result) => {
         if (err) {
             console.error('Erro ao inserir dados: ' + err);
-            return res.status(500).send('Erro ao processar a solicitação.');
+            return res.redirect('/rota-de-erro'); // Redireciona para a página de erro
         }
         console.log('Dados inseridos com sucesso.');
-        return res.status(200).send('Dados inseridos com sucesso.');
+        return res.redirect('/rota-de-sucesso'); // Redireciona para a página de sucesso
     });
+});
+
+// Rota para página de sucesso
+app.get('/rota-de-sucesso', (req, res) => {
+    res.sendFile(path.join(__dirname, '../sucesso.html'));
+});
+
+// Rota para página de erro
+app.get('/rota-de-erro', (req, res) => {
+    res.sendFile(path.join(__dirname, '../erro.html'));
 });
 
 const PORT = process.env.PORT || 3000;
