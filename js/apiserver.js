@@ -32,10 +32,10 @@ app.post('/enviar-dados', (req, res) => {
     db.query(sql, [Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha], (err, result) => {
         if (err) {
             console.error('Erro ao inserir dados: ' + err);
-            return res.redirect('/rota-de-erro'); // Redireciona para a página de erro
+            return res.status(500).json({ success: false, message: 'Erro ao inserir usuário' });
         }
         console.log('Dados inseridos com sucesso.');
-        return res.redirect('/rota-de-sucesso'); // Redireciona para a página de sucesso
+        return res.json({ success: true, message: 'Usuário inserido com sucesso' });
     });
 });
 

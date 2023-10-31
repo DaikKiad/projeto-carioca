@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node C:/Users/gusta/Documents/GitHub/projeto-carioca/js/index.js",
-    "dev": "nodemon C:/Users/gusta/Documents/GitHub/projeto-carioca/js/index.js"
+    "start": "node C:/Users/gusta/Documents/GitHub/projeto-carioca/js/apiserver.js",
+    "dev": "nodemon C:/Users/gusta/Documents/GitHub/projeto-carioca/js/apiserver.js"
   },
   "author": "",
   "license": "ISC",

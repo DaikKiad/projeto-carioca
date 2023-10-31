@@ -7,20 +7,25 @@
     <title>Cadastro</title>
     <link rel="icon" type="image/x-icon" href="assets/icone park easy.ico" />
     <link rel="stylesheet" href="css/cadastro.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Login Page by The Code Donkey -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjEo82Xjk5XfFV1qv8E2wY3SIio32ahSA&libraries=places"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjEo82Xjk5XfFV1qv8E2wY3SIio32ahSA&libraries=places"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <div class="header">
         <a href="login.html"><- Voltar ao Login</a>
     </div>
-        <div class="cadastro">
-            <form action="http://localhost:3000/enviar-dados" method="post" class="sub-cadastro">
-                <div class="upper-cadastro">
-                    <h2>Faça seu registro</h2>
+    <div class="cadastro">
+        <form action="http://localhost:3000/enviar-dados" method="post" class="sub-cadastro">
+            <div class="upper-cadastro">
+                <h2>Faça seu registro</h2>
                 <label for="nome">Nome</label> <br>
                 <input type="text" id="Nome" name="Nome" required placeholder="Insira seu nome"> <br>
 
@@ -48,19 +53,73 @@
             </div>
             <div class="btn">
                 <button type="submit">Enviar</button> <br>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 
-        <script>
-            function initMap() {
-                const input = document.getElementById("endereco");
-                const autocomplete = new google.maps.places.Autocomplete(input);
+    <script>
+        function initMap() {
+            const input = document.getElementById("endereco");
+            const autocomplete = new google.maps.places.Autocomplete(input);
+        }
+    </script>
+
+    <script>
+        initMap(); // Inicialize a API quando a página for carregada
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.sub-cadastro');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+
+                const formData = new FormData(form);
+
+                fetch('http://localhost:3000/enviar-dados', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast('Sucesso: ' + data.message, 'bg-success');
+                            window.location.href = '/login.html';
+                        } else {
+                            showToast('Erro: ' + data.message, 'bg-danger');
+                            form.reset();
+                        }
+                    })
+                    .catch(error => {
+                        showToast('Erro na solicitação: ' + error, 'bg-danger');
+                        form.reset();
+                    });
+            });
+
+            function showToast(message, bgColor) {
+                // Crie o elemento de toast como você fez antes
+                const toast = document.createElement('div');
+                toast.classList.add('toast', bgColor);
+                toast.style.position = 'fixed'; // Define a posição como fixa
+                toast.style.top = '10px'; // Define a distância do topo da página (ajuste conforme necessário)
+                toast.style.right = '10px'; // Define a distância da direita da página (ajuste conforme necessário)
+                toast.setAttribute('role', 'alert');
+                toast.setAttribute('aria-live', 'assertive');
+                toast.setAttribute('aria-atomic', 'true');
+
+                const toastBody = document.createElement('div');
+                toastBody.classList.add('toast-body');
+                toastBody.innerText = message;
+
+                toast.appendChild(toastBody);
+                document.body.appendChild(toast);
+
+                $('.toast').toast({ 'autohide': false });
+                $('.toast').toast('show');
             }
-        </script>
-        <script>
-            initMap(); // Inicialize a API quando a página for carregada
-        </script>        
+        });
+    </script>
 </body>
 
 </html>
