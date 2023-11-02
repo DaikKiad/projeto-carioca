@@ -14,8 +14,28 @@
             background-attachment: fixed;
             background-position: 0px 30.6%;
         }
+
+        .scroll-to-map-button {
+            display: inline-block;
+            background-color: rgb(137, 177, 153);
+
+            color: rgb(151, 2, 2);
+
+            padding: 10px 20px;
+
+            border-radius: 5px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: background-color 0.3s;
+        }
+
+        .scroll-to-map-button:hover {
+            background-color: #465b72;
+        }
     </style>
-    <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top fixed-top" id="mainNav">
         <div class="container px-4 px-lg-5">
             <a class="navbar-brand" href="./index.html"><img src="assets\img/icone park easy.png" alt="logo"></a>
@@ -39,7 +59,8 @@
         <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
             <div class="d-flex justify-content-center">
                 <div class="text-center">
-                    <h1 class="mx-auto my-0 text-uppercase">Estacionamentos mais perto de sua casa:</h1>
+                    <h1 class="mx-auto my-0 text-uppercase">Ache os estacionamentos mais perto de sua casa com um simples clique no mapa interativo abaixo:</h1>
+                    <a href="#map-section" class="scroll-to-map-button">Ir para o Mapa</a>
                 </div>
             </div>
         </div>
@@ -47,36 +68,58 @@
 </head>
 
 <body>
-    <section class="projects-section bg-light" id="projects">
-        <div class="container px-4 px-lg-5">
-            <!-- Featured Project Row-->
-            <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                <div class="col-xl-8 col-lg-7"><img class="img-fluid mb-3 mb-lg-0" src="assets/img/bg-masthead.jpg"
-                        alt="..." /></div>
-                <div class="col-xl-4 col-lg-5">
-                    <div class="featured-text text-center text-lg-left">
-                        <h4>Shoreline</h4>
-                        <p class="text-black-50 mb-0">Grayscale is open source and MIT licensed. This means you can use
-                            it for any project - even commercial projects! Download it, customize it, and publish your
-                            website!</p>
-                    </div>
-                </div>
-            </div>
-            
-            <script>
-                window.addEventListener('scroll', function() {
-                    var nav = document.getElementById('mainNav');
-                    if (window.scrollY > 100) {
-                        nav.classList.add('navbar-shrink');
-                    } else {
-                        nav.classList.remove('navbar-shrink');
-                    }
-                });
-            </script>    
-
-            </div>
-        </div>
+    <section id="map-section">
+        <div id="map" style="width: 100%; height: 900px;"></div>
     </section>
+
+    <script>
+        function initMap() {
+            const mapOptions = {
+                center: { lat: -34.397, lng: 150.644 }, // Coordenadas iniciais do mapa
+                zoom: 15, // Nível de zoom inicial
+            };
+            const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            // Adicione código aqui para configurar a funcionalidade de seleção de lugares próximos.
+            // Você pode adicionar marcadores, círculos, etc., para representar lugares próximos e interagir com eles.
+
+            // Exemplo de adição de um marcador:
+            const marker = new google.maps.Marker({
+                position: { lat: -34.397, lng: 150.644 }, // Coordenadas do marcador
+                map: map, // Mapa onde o marcador deve ser exibido
+                title: "Lugar de interesse", // Título do marcador
+            });
+
+            // Exemplo de pesquisa de lugares próximos:
+            const service = new google.maps.places.PlacesService(map);
+            service.nearbySearch(
+                {
+                    location: mapOptions.center,
+                    radius: 1000, // Raio de busca em metros
+                    type: ["restaurant", "store"], // Tipos de lugares a serem pesquisados
+                },
+                (results, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        // Processar os resultados da pesquisa aqui
+                    }
+                }
+            );
+        }
+    </script>
+
+    <script>
+        window.addEventListener('scroll', function () {
+            var nav = document.getElementById('mainNav');
+            if (window.scrollY > 100) {
+                nav.classList.add('navbar-shrink');
+            } else {
+                nav.classList.remove('navbar-shrink');
+            }
+        });
+    </script>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6_lSOrtqqIpsfLB26JcKpAX6-37y8QTo&libraries=places&callback=initMap"></script>
 </body>
 
 </html>
