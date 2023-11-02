@@ -1,10 +1,16 @@
 const express = require('express');
+const multer = require('multer');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const path = require('path');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // Conectar ao banco de dados MySQL
 const db = mysql.createConnection({
@@ -24,12 +30,15 @@ db.connect(err => {
 });
 
 // Rota para receber os dados do formulário
-app.post('/enviar-dados', (req, res) => {
-    const { Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha } = req.body;
+app.post('/enviar-dados', upload.array('fileFieldName'), (req, res) => {
+    const { Nome, Sobrenome, Idade, CPF, Email, Endereco, Usuario, Senha } = req.body;
+
+    console.log(req.body);
+    console.log(req.files);
 
     // Insira os dados no banco de dados
-    const sql = 'INSERT INTO usuario (Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-    db.query(sql, [Nome, Sobrenome, Idade, CPF, Email, Endereço, Usuário, Senha], (err, result) => {
+    const sql = 'INSERT INTO usuario (Nome, Sobrenome, Idade, CPF, Email, Endereco, Usuario, Senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    db.query(sql, [Nome, Sobrenome, Idade, CPF, Email, Endereco, Usuario, Senha], (err, result) => {
         if (err) {
             console.error('Erro ao inserir dados: ' + err);
             return res.status(500).json({ success: false, message: 'Erro ao inserir usuário' });
@@ -38,17 +47,6 @@ app.post('/enviar-dados', (req, res) => {
         return res.json({ success: true, message: 'Usuário inserido com sucesso' });
     });
 });
-
-// Rota para página de sucesso
-app.get('/rota-de-sucesso', (req, res) => {
-    res.sendFile(path.join(__dirname, '../sucesso.html'));
-});
-
-// Rota para página de erro
-app.get('/rota-de-erro', (req, res) => {
-    res.sendFile(path.join(__dirname, '../erro.html'));
-});
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor Express ouvindo na porta ${PORT}`);

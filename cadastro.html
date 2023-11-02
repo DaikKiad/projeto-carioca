@@ -8,14 +8,21 @@
     <link rel="icon" type="image/x-icon" href="assets/icone park easy.ico" />
     <link rel="stylesheet" href="css/cadastro.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Login Page by The Code Donkey -->
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjEo82Xjk5XfFV1qv8E2wY3SIio32ahSA&libraries=places"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function initMap() {
+            const input = document.getElementById("Endereco");
+            if (input instanceof HTMLInputElement) {
+                const autocomplete = new google.maps.places.Autocomplete(input);
+            }
+        }
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjEo82Xjk5XfFV1qv8E2wY3SIio32ahSA&libraries=places&callback=initMap"></script>
 </head>
 
 <body>
@@ -39,13 +46,13 @@
                 <input type="text" id="CPF" name="CPF" required placeholder="Insira seu CPF (apenas números)"> <br>
 
                 <label for="email">Email</label> <br>
-                <input type="email" id="email" name="Email" required placeholder="Insira seu endereço de email"> <br>
+                <input type="email" id="Email" name="Email" required placeholder="Insira seu endereço de email"> <br>
 
                 <label for="endereco">Endereço (opcional)</label> <br>
-                <input type="text" id="endereco" name="Endereço" placeholder="Insira seu endereço"> <br>
+                <input type="text" id="Endereco" name="Endereco" placeholder="Insira seu endereço"> <br>
 
                 <label for="usuario">Usuário</label> <br>
-                <input type="text" id="Usuário" name="Usuário" required placeholder="Escolha um nome de usuário"> <br>
+                <input type="text" id="Usuario" name="Usuario" required placeholder="Escolha um nome de usuário"> <br>
 
                 <label for="senha">Senha</label> <br>
                 <input type="password" id="Senha" name="Senha" required placeholder="Escolha uma senha segura"> <br>
@@ -58,14 +65,7 @@
     </div>
 
     <script>
-        function initMap() {
-            const input = document.getElementById("endereco");
-            const autocomplete = new google.maps.places.Autocomplete(input);
-        }
-    </script>
-
-    <script>
-        initMap(); // Inicialize a API quando a página for carregada
+        initMap();
     </script>
 
     <script>
@@ -73,7 +73,7 @@
             const form = document.querySelector('.sub-cadastro');
 
             form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Impede o envio padrão do formulário
+                event.preventDefault();
 
                 const formData = new FormData(form);
 
@@ -98,7 +98,6 @@
             });
 
             function showToast(message, bgColor) {
-                // Crie o elemento de toast como você fez antes
                 const toast = document.createElement('div');
                 toast.classList.add('toast', bgColor);
                 toast.style.position = 'fixed'; // Define a posição como fixa
