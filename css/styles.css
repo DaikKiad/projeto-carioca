@@ -11155,11 +11155,12 @@ body {
 .signup-section {
   padding: 10rem 0;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 75%, #000 100%), url("../assets/img/fundo\ contate.png");
-  background-position: bottom;
+  background-position: center 70%;
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: cover;
 }
+
 .signup-section .form-signup input {
   box-shadow: 0 0.1875rem 0.1875rem 0 rgba(0, 0, 0, 0.1) !important;
   padding: 1.25rem 2rem;
@@ -11313,4 +11314,15 @@ body {
 #mainNav.sticky-top.navbar-shrink {
     background-color: #fff; /* Define a cor de fundo quando está fixa */
     border-bottom: 1px solid #64a19d; /* Adicione uma borda inferior quando está fixa */
+}
+
+.night {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  filter: blur(0.1vmin);
+  background-image: radial-gradient(ellipse at top, transparent 0%, var(--dark-color)), radial-gradient(ellipse at bottom, var(--dark-color), rgba(145, 233, 255, 0.2)), repeating-linear-gradient(220deg, black 0px, black 19px, transparent 19px, transparent 22px), repeating-linear-gradient(189deg, black 0px, black 19px, transparent 19px, transparent 22px), repeating-linear-gradient(148deg, black 0px, black 19px, transparent 19px, transparent 22px), linear-gradient(90deg, #00fffa, #f0f0f0);
 }

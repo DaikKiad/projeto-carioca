@@ -30,7 +30,7 @@
         <a href="login.html"><- Voltar ao Login</a>
     </div>
     <div class="cadastro">
-        <form action="http://localhost:3000/enviar-dados" method="post" class="sub-cadastro">
+        <form action="http://localhost:3000/cadastrar-usuario" method="post" class="sub-cadastro">
             <div class="upper-cadastro">
                 <h2>Faça seu registro</h2>
                 <label for="nome">Nome</label> <br>
@@ -77,7 +77,7 @@
 
                 const formData = new FormData(form);
 
-                fetch('http://localhost:3000/enviar-dados', {
+                fetch('http://localhost:3000/cadastrar-usuario', {
                     method: 'POST',
                     body: formData
                 })
@@ -100,9 +100,9 @@
             function showToast(message, bgColor) {
                 const toast = document.createElement('div');
                 toast.classList.add('toast', bgColor);
-                toast.style.position = 'fixed'; // Define a posição como fixa
-                toast.style.top = '10px'; // Define a distância do topo da página (ajuste conforme necessário)
-                toast.style.right = '10px'; // Define a distância da direita da página (ajuste conforme necessário)
+                toast.style.position = 'fixed';
+                toast.style.top = '10px';
+                toast.style.right = '10px';
                 toast.setAttribute('role', 'alert');
                 toast.setAttribute('aria-live', 'assertive');
                 toast.setAttribute('aria-atomic', 'true');

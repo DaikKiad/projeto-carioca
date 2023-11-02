@@ -69,19 +69,23 @@ body {
     background-repeat: no-repeat;
 }
 
-.form {
+.login {
     display: flex;
     justify-content: center;
     padding-top: 5rem;
 }
 
-.sub-form {
+.upper-login {
+    padding-top: 2rem;
+}
+
+.sub-login {
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-width: 23vw; /* Defina um valor máximo para a largura */
+        max-width: 22vw; /* Defina um valor máximo para a largura */
         width: 100%; /* Ocupa a largura máxima disponível */
-        border-radius: 12px;
+        border-radius: 50px;
         box-shadow: rgba(50, 50, 93, 0,25) 0px 13px 27px -5px,
          rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
         background-color: white;
@@ -96,6 +100,7 @@ h2 {
 label {
     padding-left: 16px;
     opacity: 0.75;
+    padding-top: 1.5rem;
 }
 
 input {
@@ -104,7 +109,7 @@ input {
     border-style: none;
     outline: none;
     margin-top: 8px;
-    padding: 12px 24px;
+    padding: 20px 20px;
     width: 250px;
     background-color: #EAEEED;
 }
@@ -130,11 +135,16 @@ button:hover {
     opacity: 0.8;
 }
 
-.bottom-form {
+.bottom-login {
     display: flex;
     justify-content: center;
     margin-top: 3rem;
     margin-bottom: 3rem;
+}
+
+.no-account  {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .signup {
