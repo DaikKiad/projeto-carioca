@@ -12,18 +12,22 @@
 }
 
 .parent-link {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, ;
 }
 
 .parent-link, .icon {
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .logo {
     height: 42px;
+}
+
+.navbar-brand {
+    position: absolute;
+    left: 348px;
+    top: 3px;
 }
 
 .logo:hover {
@@ -31,11 +35,12 @@
 }
 
 .social-links {
-    padding: 0 2.5rem;
+    padding: 20px 1rem;
     margin: 0;
-    color: white;
+    color: rgb(198, 186, 186);
     font-weight: 400;
     text-decoration: none;
+    margin-left: 20px;
 }
 
 .social-links:hover {
@@ -55,9 +60,8 @@
 nav {
     font-size: 20px;
     font-weight: 700;
-    display: flex;
     justify-content: space-between;
-    padding-top: 32px;
+    padding-top: 30px;
 }
 
 body {
