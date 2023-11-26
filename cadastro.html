@@ -22,7 +22,7 @@
         }
     </script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDguAb8NeKg3qGwXGGzSYPMquM9316WAfA&libraries=places&callback=initMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap"></script>
 </head>
 
 <body>
@@ -33,30 +33,27 @@
         <form action="http://localhost:3000/cadastrar-usuario" method="post" class="sub-cadastro">
             <div class="upper-cadastro">
                 <h2>Faça seu registro</h2>
-                <label for="nome">Nome</label> <br>
+                <label for="Nome">Nome</label> <br>
                 <input type="text" id="Nome" name="Nome" required placeholder="Insira seu nome"> <br>
 
-                <label for="sobrenome">Sobrenome</label> <br>
-                <input type="text" id="Sobrenome" name="Sobrenome" required placeholder="Insira seu sobrenome"> <br>
+                <label for="Sexo">Sexo</label> <br>
+                <select id="Sexo" name="Sexo" required>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select> <br>
 
-                <label for="idade">Idade</label> <br>
-                <input type="number" id="Idade" name="Idade" required placeholder="Insira sua idade"> <br>
-
-                <label for="cpf">CPF (sem o dígito)</label> <br>
+                
+                <label for="CPF">CPF (sem o dígito)</label> <br>
                 <input type="text" id="CPF" name="CPF" required placeholder="Insira seu CPF (apenas números)"> <br>
-
-                <label for="email">Email</label> <br>
+                
+                <label for="Email">Email</label> <br>
                 <input type="email" id="Email" name="Email" required placeholder="Insira seu endereço de email"> <br>
-
-                <label for="endereco">Endereço (opcional)</label> <br>
-                <input type="text" id="Endereco" name="Endereco" placeholder="Insira seu endereço"> <br>
-
-                <label for="usuario">Usuário</label> <br>
-                <input type="text" id="Usuario" name="Usuario" required placeholder="Escolha um nome de usuário"> <br>
-
-                <label for="senha">Senha</label> <br>
+                
+                <label for="Senha">Senha</label> <br>
                 <input type="password" id="Senha" name="Senha" required placeholder="Escolha uma senha segura"> <br>
 
+                <label for="Endereco">Endereço</label> <br>
+                <input type="text" id="Endereco" name="Endereco" placeholder="Insira seu endereço"> <br>
             </div>
             <div class="btn">
                 <button type="submit">Enviar</button> <br>

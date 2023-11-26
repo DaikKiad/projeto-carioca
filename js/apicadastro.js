@@ -4,8 +4,6 @@ const multer = require('multer');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const bcrypt = require('bcrypt')
-const saltRounds = 10;
 
 const app = express();
 app.use(cors());
@@ -18,7 +16,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'projeto_carioca',
+    database: 'PARKEASY',
     port: 3306
 });
 
@@ -31,29 +29,21 @@ db.connect(err => {
 });
 
 app.post('/cadastrar-usuario', upload.array('fileFieldName'), (req, res) => {
-    const { Nome, Sobrenome, Idade, CPF, Email, Endereco, Usuario, Senha } = req.body;
+    const { Nome, Sexo, Senha, CPF, Email, Saldo, InicioCadastro } = req.body;
 
-    const plainTextPassword = req.body.Senha;
+    console.log(req.body);
+    console.log(req.files);
 
-    bcrypt.hash(plainTextPassword, saltRounds, (err, hash) => {
+    const sql = `INSERT INTO CONTA_CLIENTE (NOME_CLIENTE, SEXO, SENHA, CPF, EMAIL_CLIENTE, SALDO_CLIENTE, INICIO_CADASTRO)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    db.query(sql, [Nome, Sexo, Senha, CPF, Email, Saldo, InicioCadastro], (err, result) => {
         if (err) {
-            console.error('Erro ao criar o hash da senha: ' + err);
-        } else { 
-
-            console.log(req.body);
-            console.log(req.files);
-            console.log(hash);
-
-            const sql = 'INSERT INTO usuario (Nome, Sobrenome, Idade, CPF, Email, Endereco, Usuario, Senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-            db.query(sql, [Nome, Sobrenome, Idade, CPF, Email, Endereco, Usuario, hash], (err, result) => {
-                if (err) {
-                    console.error('Erro ao inserir dados: ' + err);
-                    return res.status(500).json({ success: false, message: 'Erro ao inserir usuário' });
-                }
-                console.log('Dados inseridos com sucesso.');
-                return res.json({ success: true, message: 'Usuário inserido com sucesso' });
-            });
+            console.error('Erro ao inserir dados: ' + err);
+            return res.status(500).json({ success: false, message: 'Erro ao inserir usuário' });
         }
+        console.log('Dados inseridos com sucesso.');
+        return res.json({ success: true, message: 'Usuário inserido com sucesso' });
     });
 });
 
@@ -144,8 +134,6 @@ app.post('/login-usuario', (req, res) => {
     request.write(data);
     request.end();
 });
-
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const bcrypt = require('bcrypt');
 
 const app = express();
 app.use(cors());
@@ -13,7 +12,7 @@ const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'projeto_carioca',
+    database: 'PARKEASY',
     port: 3306
 });
 
@@ -26,30 +25,17 @@ db.connect(err => {
 });
 
 app.post('/autenticar-usuario', (req, res) => {
-    const { Usuario, Senha } = req.body;
+    const { EMAIL_CLIENTE, SENHA } = req.body;
 
-    const sql = 'SELECT * FROM usuario WHERE Usuario = ?';
-    db.query(sql, [Usuario], (err, results) => {
+    const sql = 'SELECT * FROM CONTA_CLIENTE WHERE EMAIL_CLIENTE = ? AND SENHA = ?';
+    db.query(sql, [EMAIL_CLIENTE, SENHA], (err, results) => {
         if (err) {
             console.error('Erro ao consultar o banco de dados: ' + err);
             return res.status(500).json({ success: false, message: 'Erro na autenticação' });
         }
 
         if (results.length === 1) {
-            const user = results[0];
-
-            bcrypt.compare(senhaLogin, senhaHash, (bcryptErr, bcryptRes) => {
-                if (bcryptErr) {
-                    console.error('Erro ao comparar senhas: ' + bcryptErr);
-                    return res.status(500).json({ success: false, message: 'Erro na autenticação' });
-                }
-
-                if (bcryptRes) {
-                    return res.json({ success: true, message: 'Usuário autenticado com sucesso' });
-                } else {
-                    return res.status(401).json({ success: false, message: 'Credenciais inválidas' });
-                }
-            });
+            return res.json({ success: true, message: 'Usuário autenticado com sucesso' });
         } else {
             return res.status(401).json({ success: false, message: 'Credenciais inválidas' });
         }
