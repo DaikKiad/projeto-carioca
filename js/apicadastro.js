@@ -7,6 +7,7 @@ const mysql = require('mysql');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const storage = multer.memoryStorage();
@@ -74,15 +75,18 @@ app.get('/usuarios/:id', (req, res) => {
 
 app.put('/usuarios/:id', (req, res) => {
     const userId = req.params.id;
-    const { NOME_CLIENTE, SEXO, CPF, EMAIL_CLIENTE, SENHA, ENDERECO_CLIENTE } = req.body;
+    const { NOME_CLIENTE, EMAIL_CLIENTE } = req.body;
+
+    console.log("Body: ", req.body);
+    console.log(`Nome: ${NOME_CLIENTE}, Email: ${EMAIL_CLIENTE}.`);
 
     const sql = `
         UPDATE conta_cliente
-        SET NOME_CLIENTE = ?, SEXO = ?, CPF = ?, EMAIL_CLIENTE = ?, SENHA = ?, ENDERECO_CLIENTE = ?
+        SET NOME_CLIENTE = ?, EMAIL_CLIENTE = ?
         WHERE ID_CLIENTE = ?
     `;
 
-    db.query(sql, [NOME_CLIENTE, SEXO, CPF, EMAIL_CLIENTE, SENHA, ENDERECO_CLIENTE, userId], (err, result) => {
+    db.query(sql, [NOME_CLIENTE, EMAIL_CLIENTE, userId], (err, result) => {
         if (err) {
             console.error('Erro ao atualizar usuário: ' + err);
             return res.status(500).json({ success: false, message: 'Erro ao atualizar usuário' });

@@ -4,88 +4,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Atendimentos</title>
-    <link rel="icon" type="image/x-icon" href="assets/icone park easy.ico" />
-    <link rel="stylesheet" href="css/cadastro.css">
+    <title>Operações de Atendimento</title>
+    <link rel="icon" type="image/x-icon" href="assets/icone_park_easy.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            margin-right: 5px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .btn-primary, .btn-success, .btn-info, .btn-danger {
+            --bs-btn-color: #fff;
+            --bs-btn-bg: #7464a1;
+            --bs-btn-border-color: #7464a1;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #635589;
+            --bs-btn-hover-border-color: #5d5081;
+            --bs-btn-focus-shadow-rgb: 137, 123, 175;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #5d5081;
+            --bs-btn-active-border-color: #574b79;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #fff;
+            --bs-btn-disabled-bg: #7464a1;
+            --bs-btn-disabled-border-color: #7464a1;
+        }
+
+        .btn-primary:hover, .btn-success:hover, .btn-info:hover, .btn-danger:hover {
+            --bs-btn-bg: #635589;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="header">
-        <a href="index.html"><- Voltar ao Inicio</a>
-    </div>
-    <div class="cadastro">
-        <form action="http://localhost:3000/cadastrar-atendimento" method="post" class="sub-cadastro">
-            <div class="upper-cadastro">
-                <h2>Faça o cadastro do Atendimento</h2>
-                <label for="Descricao">Descrição do Atendimento</label> <br>
-                <input type="text" id="Descricao" name="Descricao" required placeholder="Insira a descrição"> <br>
+    <h2>Operações de Atendimento</h2>
 
-                <label for="Valor">Valor do Atendimento</label> <br>
-                <input type="text" id="Valor" name="Valor" required placeholder="Insira o valor"> <br>
+    <h3>Lista de Atendimentos</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>ID do Cliente</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="atendimento-table-body"></tbody>
+    </table>
 
-                <label for="ClienteID">ID do Cliente</label> <br>
-                <input type="text" id="ClienteID" name="ClienteID" required placeholder="Insira o ID do cliente"> <br>
-            </div>
-            <div class="btn">
-                <button type="submit">Enviar</button> <br>
-            </div>
-        </form>
-    </div>
+    <h3>Operações de Atendimento</h3>
+    <form id="atendimento-form">
+        <div class="form-group">
+            <label for="atendimento-id">ID do Atendimento:</label>
+            <input type="text" class="form-control" id="atendimento-id" name="atendimento-id" required>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="getAtendimentoById()">Buscar Atendimento</button>
+        <div class="form-group">
+            <label for="atendimento-descricao">Descrição:</label>
+            <input type="text" class="form-control" id="atendimento-descricao" name="atendimento-descricao" required>
+        </div>
+        <div class="form-group">
+            <label for="atendimento-valor">Valor:</label>
+            <input type="number" class="form-control" id="atendimento-valor" name="atendimento-valor" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="atendimento-id-cliente">ID do Cliente:</label>
+            <input type="number" class="form-control" id="atendimento-id-cliente" name="atendimento-id-cliente" required>
+        </div>
+        <button type="submit" class="btn btn-success">Atualizar Atendimento</button>
+        <button type="button" class="btn btn-danger" onclick="deleteAtendimento()">Excluir Atendimento</button>
+    </form>
+
+    <h3>Excluir Atendimento</h3>
+    <form id="delete-atendimento-form">
+        <div class="form-group">
+            <label for="delete-atendimento-id">ID do Atendimento:</label>
+            <input type="text" class="form-control" id="delete-atendimento-id" name="delete-atendimento-id" required>
+        </div>
+        <button type="button" class="btn btn-danger" onclick="deleteAtendimento()">Excluir Atendimento</button>
+        <button type="button" class="btn btn-info" onclick="goBack()">Voltar</button>
+        <button type="button" class="btn btn-primary" onclick="goToIndex()">Ir para o Início</button>
+    </form>
 
     <script>
-       document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('.sub-cadastro');
+        function getAtendimentoById(id) {
+            const updateIdInput = document.getElementById('atendimento-id');
+            const atendimentoId = id || updateIdInput.value;
 
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                const formData = new FormData(form);
-
-                fetch('http://localhost:3000/cadastrar-atendimento', {
-                    method: 'POST',
-                    body: formData
+            fetch(`http://localhost:3000/atendimentos/${atendimentoId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro na solicitação: ${response.statusText}`);
+                    }
+                    return response.json();
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showToast('Sucesso: ' + data.message, 'bg-success');
-                            // Adicione qualquer redirecionamento ou lógica adicional após o sucesso
-                        } else {
-                            showToast('Erro: ' + data.message, 'bg-danger');
-                            form.reset();
-                        }
-                    })
-                    .catch(error => {
-                        showToast('Erro na solicitação: ' + error, 'bg-danger');
-                        form.reset();
-                    });
-            });
+                .then(data => {
+                    if (data.atendimento) {
+                        const atendimento = data.atendimento;
+                        document.getElementById('atendimento-id').value = atendimento.ID_ATENDIMENTO || '';
+                        document.getElementById('atendimento-descricao').value = atendimento.DESCRICAO_ATENDIMENTO || '';
+                        document.getElementById('atendimento-valor').value = atendimento.VALOR_ATENDIMENTO || '';
+                        document.getElementById('atendimento-id-cliente').value = atendimento.ID_CLIENTE || '';
+                    } else {
+                        console.error('Atendimento não encontrado na resposta do servidor.');
+                    }
+                })
+                .catch(error => console.error('Erro ao obter detalhes do atendimento:', error));
+        }
 
-            function showToast(message, bgColor) {
-                const toast = document.createElement('div');
-                toast.classList.add('toast', bgColor);
-                toast.style.position = 'fixed';
-                toast.style.top = '10px';
-                toast.style.right = '10px';
-                toast.setAttribute('role', 'alert');
-                toast.setAttribute('aria-live', 'assertive');
-                toast.setAttribute('aria-atomic', 'true');
+        function updateAtendimento() {
+            const atendimentoIdInput = document.getElementById('atendimento-id');
+            const atendimentoId = atendimentoIdInput.value;
+            const updateDescricao = document.getElementById('atendimento-descricao').value;
+            const updateValor = document.getElementById('atendimento-valor').value;
+            const updateIdCliente = document.getElementById('atendimento-id-cliente').value;
 
-                const toastBody = document.createElement('div');
-                toastBody.classList.add('toast-body');
-                toastBody.innerText = message;
-
-                toast.appendChild(toastBody);
-                document.body.appendChild(toast);
-
-                $('.toast').toast({ 'autohide': false });
-                $('.toast').toast('show');
+            // Validar se os campos obrigatórios estão preenchidos
+            if (!atendimentoId || !updateDescricao || !updateValor || !updateIdCliente) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
             }
+
+            fetch(`http://localhost:3000/atendimentos/${atendimentoId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    DESCRICAO_ATENDIMENTO: updateDescricao,
+                    VALOR_ATENDIMENTO: updateValor,
+                    ID_CLIENTE: updateIdCliente,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro na solicitação: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        // Tratar erros específicos, e.g., entrada duplicada
+                        if (data.error && data.error.code === 'ER_DUP_ENTRY') {
+                            alert('Erro: Já existe um atendimento com este ID.');
+                        } else {
+                            alert('Erro ao atualizar atendimento. Por favor, tente novamente.');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao atualizar atendimento:', error);
+                    alert('Erro ao atualizar atendimento. Por favor, tente novamente.');
+                });
+        }
+
+        function loadAtendimentoTable() {
+            const atendimentoTableBody = document.getElementById('atendimento-table-body');
+
+            fetch('http://localhost:3000/atendimentos')
+                .then(response => response.json())
+                .then(data => {
+                    data.atendimentos.forEach(atendimento => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${atendimento.ID_ATENDIMENTO}</td>
+                            <td>${atendimento.DESCRICAO_ATENDIMENTO}</td>
+                            <td>${atendimento.VALOR_ATENDIMENTO}</td>
+                            <td>${atendimento.ID_CLIENTE}</td>
+                            <td>
+                                <button class="btn btn-info" onclick="getAtendimentoById(${atendimento.ID_ATENDIMENTO})">Editar</button>
+                                <button class="btn btn-danger" onclick="deleteAtendimento(${atendimento.ID_ATENDIMENTO})">Excluir</button>
+                            </td>`;
+                        atendimentoTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter atendimentos:', error));
+        }
+
+        function deleteAtendimento(id) {
+            const deleteIdInput = document.getElementById('delete-atendimento-id');
+            const atendimentoId = id || deleteIdInput.value;
+
+            fetch(`http://localhost:3000/atendimentos/${atendimentoId}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                })
+                .catch(error => console.error('Erro ao excluir atendimento:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadAtendimentoTable();
+
+            document.getElementById('atendimento-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                updateAtendimento();
+            });
         });
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function goToIndex() {
+            window.location.href = 'index.html';
+        }
     </script>
 </body>
 
