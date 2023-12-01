@@ -73,10 +73,9 @@
                 })
                 .then(data => {
                     if (data.success) {
-                        alert(data.message); // Mensagem de sucesso
+                        alert(data.message);
                         location.reload();
                     } else {
-                        // Trate erros específicos, se necessário
                         alert('Erro ao cadastrar veículo. Por favor, tente novamente.');
                     }
                 })
