@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Empresas</title>
+    <link rel="icon" type="image/x-icon" href="assets/icone park easy.ico" />
+    <link rel="stylesheet" href="css/cadastro.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <a href="login.html"><- Voltar ao Login</a>
+    </div>
+    <div class="cadastro">
+        <form action="http://localhost:3000/cadastrar-empresa" method="post" class="sub-cadastro">
+            <div class="upper-cadastro">
+                <h2>Faça o cadastro da Empresa</h2>
+                <label for="NomeEmpresa">Nome da Empresa</label> <br>
+                <input type="text" id="NomeEmpresa" name="NomeEmpresa" required placeholder="Insira o nome da empresa"> <br>
+
+                <label for="CNPJ">CNPJ</label> <br>
+                <input type="text" id="CNPJ" name="CNPJ" required placeholder="Insira o CNPJ"> <br>
+            </div>
+            <div class="btn">
+                <button type="submit">Enviar</button> <br>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.sub-cadastro');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const formData = new FormData(form);
+
+                fetch('http://localhost:3000/cadastrar-empresa', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast('Sucesso: ' + data.message, 'bg-success');
+                            // Adicione qualquer redirecionamento ou lógica adicional após o sucesso
+                        } else {
+                            showToast('Erro: ' + data.message, 'bg-danger');
+                            form.reset();
+                        }
+                    })
+                    .catch(error => {
+                        showToast('Erro na solicitação: ' + error, 'bg-danger');
+                        form.reset();
+                    });
+            });
+
+            function showToast(message, bgColor) {
+                const toast = document.createElement('div');
+                toast.classList.add('toast', bgColor);
+                toast.style.position = 'fixed';
+                toast.style.top = '10px';
+                toast.style.right = '10px';
+                toast.setAttribute('role', 'alert');
+                toast.setAttribute('aria-live', 'assertive');
+                toast.setAttribute('aria-atomic', 'true');
+
+                const toastBody = document.createElement('div');
+                toastBody.classList.add('toast-body');
+                toastBody.innerText = message;
+
+                toast.appendChild(toastBody);
+                document.body.appendChild(toast);
+
+                $('.toast').toast({ 'autohide': false });
+                $('.toast').toast('show');
+            }
+        });
+    </script>
+</body>
+
+</html>
