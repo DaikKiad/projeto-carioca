@@ -88,6 +88,14 @@
             <input type="text" class="form-control" id="update-id" name="update-id" required>
         </div>
         <button type="button" class="btn btn-primary" onclick="getUserById()">Buscar Usuário</button>
+        <div class="form-group">
+            <label for="update-nome">Novo Nome:</label>
+            <input type="text" class="form-control" id="update-nome" name="update-nome" required>
+        </div>
+        <div class="form-group">
+            <label for="update-email">Novo Email:</label>
+            <input type="email" class="form-control" id="update-email" name="update-email" required>
+        </div>
         <button type="submit" class="btn btn-success">Atualizar Usuário</button>
     </form>
 
@@ -98,8 +106,6 @@
             <input type="text" class="form-control" id="delete-id" name="delete-id" required>
         </div>
         <button type="button" class="btn btn-danger" onclick="deleteUser()">Excluir Usuário</button>
-        <a class="btn btn-voltaradm" href="./administrador.html">Volte a Administração</a>
-        <a class="btn btn-voltarinicio" href="./index.html">Volte ao Inicio</a>
     </form>
 
     <script>
@@ -116,9 +122,9 @@
                     data.usuarios.forEach(usuario => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                            <td>${conta_cliente.ID_CLIENTE}</td>
-                            <td>${conta_cliente.NOME_CLIENTE}</td>
-                            <td>${conta_cliente.EMAIL_CLIENTE}</td>
+                            <td>${usuario.ID_CLIENTE}</td>
+                            <td>${usuario.NOME_CLIENTE}</td>
+                            <td>${usuario.EMAIL_CLIENTE}</td>
                             <td>
                                 <button class="btn btn-info" onclick="getUserById(${usuario.ID_CLIENTE})">Editar</button>
                                 <button class="btn btn-danger" onclick="deleteUser(${usuario.ID_CLIENTE})">Excluir</button>
@@ -130,44 +136,65 @@
         }
 
         function getUserById(id) {
-            // Preencha os campos de atualização com os dados do usuário
-            const updateIdInput = document.getElementById('update-id');
-            updateIdInput.value = id;
+    const updateIdInput = document.getElementById('update-id');
+    updateIdInput.value = id;
 
-            // Adapte conforme necessário para obter os detalhes do usuário
-            // e preencher outros campos no formulário de atualização
+    fetch(`http://localhost:3000/usuarios/${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erro na solicitação: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.usuario) {
+                const usuario = data.usuario;
+                document.getElementById('update-nome').value = usuario.NOME_CLIENTE || '';
+                document.getElementById('update-email').value = usuario.EMAIL_CLIENTE || '';
+            } else {
+                console.error('Usuário não encontrado na resposta do servidor.');
+            }
+        })
+        .catch(error => console.error('Erro ao obter detalhes do usuário:', error));
+};
 
-            // Exemplo:
-            // fetch(`http://localhost:3000/usuarios/${id}`)
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         // Preencher campos no formulário de atualização
-            //         // Exemplo: document.getElementById('update-nome').value = data.usuario.NOME_CLIENTE;
-            //     })
-            //     .catch(error => console.error('Erro ao obter detalhes do usuário:', error));
-        };
+    function deleteUser(id) {
+    const deleteIdInput = document.getElementById('delete-id');
+    const userId = id || deleteIdInput.value;
 
-        function deleteUser(id) {
-            const deleteIdInput = document.getElementById('delete-id');
-            const userId = id || deleteIdInput.value;
+    fetch(`http://localhost:3000/usuarios/${userId}`, { method: 'DELETE' })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            location.reload();
+        })
+        .catch(error => console.error('Erro ao excluir usuário:', error));
+}
 
-            // Chame a API para excluir o usuário
-            fetch(`http://localhost:3000/usuarios/${userId}`, { method: 'DELETE' })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                    // Recarregar a tabela após a exclusão
-                    location.reload();
-                })
-                .catch(error => console.error('Erro ao excluir usuário:', error));
-        }
+    document.getElementById('update-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const updateId = document.getElementById('update-id').value;
+    const updateNome = document.getElementById('update-nome').value;
+    const updateEmail = document.getElementById('update-email').value;
 
-        // Adicione a lógica de atualização de usuário conforme necessário
-        document.getElementById('update-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const updateId = document.getElementById('update-id').value;
+    fetch(`http://localhost:3000/usuarios/${updateId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            NOME_CLIENTE: updateNome,
+            EMAIL_CLIENTE: updateEmail,
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            location.reload();
+        })
+        .catch(error => console.error('Erro ao atualizar usuário:', error));
+});
+    </script>
+</body>
 
-            // Chame a API para atualizar o usuário
-            // Adaptar conforme necessário para enviar os dados atualizados
-            // fetch(`http://localhost:3000/usuarios/${update
-            });
+</html>

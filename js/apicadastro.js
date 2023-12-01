@@ -29,15 +29,15 @@ db.connect(err => {
 });
 
 app.post('/cadastrar-usuario', upload.array('fileFieldName'), (req, res) => {
-    const { Nome, Sexo, Senha, CPF, Email, Saldo, InicioCadastro } = req.body;
+    const { NOME_CLIENTE, SEXO, CPF, EMAIL_CLIENTE, SENHA, ENDERECO_CLIENTE } = req.body;
 
     console.log(req.body);
     console.log(req.files);
 
-    const sql = `INSERT INTO CONTA_CLIENTE (NOME_CLIENTE, SEXO, SENHA, CPF, EMAIL_CLIENTE, SALDO_CLIENTE, INICIO_CADASTRO)
-                 VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO conta_cliente (NOME_CLIENTE, SEXO, CPF, EMAIL_CLIENTE, SENHA, ENDERECO_CLIENTE)
+                 VALUES (?, ?, ?, ?, ?, ?)`;
 
-    db.query(sql, [Nome, Sexo, Senha, CPF, Email, Saldo, InicioCadastro], (err, result) => {
+    db.query(sql, [NOME_CLIENTE, SEXO, CPF, EMAIL_CLIENTE, SENHA, ENDERECO_CLIENTE], (err, result) => {
         if (err) {
             console.error('Erro ao inserir dados: ' + err);
             return res.status(500).json({ success: false, message: 'Erro ao inserir usuário' });
@@ -48,7 +48,7 @@ app.post('/cadastrar-usuario', upload.array('fileFieldName'), (req, res) => {
 });
 
 app.get('/usuarios', (req, res) => {
-    db.query('SELECT * FROM usuario', (err, results) => {
+    db.query('SELECT * FROM conta_cliente', (err, results) => {
         if (err) {
             console.error('Erro ao buscar usuários: ' + err);
             return res.status(500).json({ success: false, message: 'Erro ao buscar usuários' });
@@ -59,7 +59,7 @@ app.get('/usuarios', (req, res) => {
 
 app.get('/usuarios/:id', (req, res) => {
     const userId = req.params.id;
-    db.query('SELECT * FROM usuario WHERE id = ?', userId, (err, results) => {
+    db.query('SELECT * FROM conta_cliente WHERE ID_CLIENTE = ?', userId, (err, results) => {
         if (err) {
             console.error('Erro ao buscar usuário: ' + err);
             return res.status(500).json({ success: false, message: 'Erro ao buscar usuário' });
@@ -67,28 +67,30 @@ app.get('/usuarios/:id', (req, res) => {
         if (results.length === 0) {
             return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
         }
-        res.json({ success: true, usuario: results[0] });
+        const usuario = results[0];
+        res.json({ success: true, usuario: usuario });
     });
 });
 
-app.put('/usuarios/:id', (req, res) => {
+app.get('/usuarios/:id', (req, res) => {
     const userId = req.params.id;
-    const { Nome, Sobrenome, Idade, CPF, Email, Endereco, Usuario } = req.body;
-
-    db.query('UPDATE usuario SET Nome = ?, Sobrenome = ?, Idade = ?, CPF = ?, Email = ?, Endereco = ?, Usuario = ? WHERE id = ?',
-        [Nome, Sobrenome, Idade, CPF, Email, Endereco, Usuario, userId], (err, result) => {
-            if (err) {
-                console.error('Erro ao atualizar usuário: ' + err);
-                return res.status(500).json({ success: false, message: 'Erro ao atualizar usuário' });
-            }
-            res.json({ success: true, message: 'Usuário atualizado com sucesso' });
-        });
+    db.query('SELECT * FROM conta_cliente WHERE ID_CLIENTE = ?', userId, (err, results) => {
+        if (err) {
+            console.error('Erro ao buscar usuário: ' + err);
+            return res.status(500).json({ success: false, message: 'Erro ao buscar usuário' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
+        }
+        const usuario = results[0];
+        res.json({ success: true, usuario: usuario });
+    });
 });
 
 app.delete('/usuarios/:id', (req, res) => {
     const userId = req.params.id;
 
-    db.query('DELETE FROM usuario WHERE id = ?', userId, (err, result) => {
+    db.query('DELETE FROM conta_cliente WHERE ID_CLIENTE = ?', userId, (err, result) => {
         if (err) {
             console.error('Erro ao excluir usuário: ' + err);
             return res.status(500).json({ success: false, message: 'Erro ao excluir usuário' });
