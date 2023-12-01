@@ -22,7 +22,7 @@
         }
     </script>
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=initMap"></script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDguAb8NeKg3qGwXGGzSYPMquM9316WAfA&libraries=places&callback=initMap"></script>
 </head>
 
 <body>
@@ -37,14 +37,13 @@
                 <input type="text" id="Nome" name="Nome" required placeholder="Insira seu nome"> <br>
 
                 <label for="Sexo">Sexo</label> <br>
-                <select id="Sexo" name="Sexo" required>
+                <select id="Sexo" name="Sexo" required class="input-field">
                     <option value="M">Masculino</option>
                     <option value="F">Feminino</option>
-                </select> <br>
-
+                </select> <br>                            
                 
-                <label for="CPF">CPF (sem o dígito)</label> <br>
-                <input type="text" id="CPF" name="CPF" required placeholder="Insira seu CPF (apenas números)"> <br>
+                <label for="CPF">CPF</label> <br>
+                <input type="text" id="CPF" name="CPF" required placeholder="Insira seu CPF (com dígito)"> <br>
                 
                 <label for="Email">Email</label> <br>
                 <input type="email" id="Email" name="Email" required placeholder="Insira seu endereço de email"> <br>
