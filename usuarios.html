@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operações de Usuário</title>
+    <link rel="icon" type="image/x-icon" href="assets/icone park easy.ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            padding: 20px;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+    
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    
+        th {
+            background-color: #f2f2f2;
+        }
+    
+        button {
+            margin-right: 5px;
+        }
+    
+        form {
+            margin-top: 20px;
+        }
+    
+        .btn-primary, .btn-success, .btn-info, .btn-danger {
+            --bs-btn-color: #fff;
+            --bs-btn-bg: #7464a1;
+            --bs-btn-border-color: #7464a1;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #635589;
+            --bs-btn-hover-border-color: #5d5081;
+            --bs-btn-focus-shadow-rgb: 137, 123, 175;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #5d5081;
+            --bs-btn-active-border-color: #574b79;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #fff;
+            --bs-btn-disabled-bg: #7464a1;
+            --bs-btn-disabled-border-color: #7464a1;
+        }
+    
+        .btn-primary:hover, .btn-success:hover, .btn-info:hover, .btn-danger:hover {
+            --bs-btn-bg: #635589;
+        }
+    </style>    
+</head>
+
+<body>
+    <h2>Operações de Usuário</h2>
+
+    <h3>Lista de Usuários</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="user-table-body"></tbody>
+    </table>
+
+    <h3>Atualizar Usuário</h3>
+    <form id="update-form">
+        <div class="form-group">
+            <label for="update-id">ID do Usuário:</label>
+            <input type="text" class="form-control" id="update-id" name="update-id" required>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="getUserById()">Buscar Usuário</button>
+        <button type="submit" class="btn btn-success">Atualizar Usuário</button>
+    </form>
+
+    <h3>Excluir Usuário</h3>
+    <form id="delete-form">
+        <div class="form-group">
+            <label for="delete-id">ID do Usuário:</label>
+            <input type="text" class="form-control" id="delete-id" name="delete-id" required>
+        </div>
+        <button type="button" class="btn btn-danger" onclick="deleteUser()">Excluir Usuário</button>
+        <a class="btn btn-voltaradm" href="./administrador.html">Volte a Administração</a>
+        <a class="btn btn-voltarinicio" href="./index.html">Volte ao Inicio</a>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadUserTable();
+        });
+
+        function loadUserTable() {
+            const userTableBody = document.getElementById('user-table-body');
+
+            fetch('http://localhost:3000/usuarios')
+                .then(response => response.json())
+                .then(data => {
+                    data.usuarios.forEach(usuario => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${conta_cliente.ID_CLIENTE}</td>
+                            <td>${conta_cliente.NOME_CLIENTE}</td>
+                            <td>${conta_cliente.EMAIL_CLIENTE}</td>
+                            <td>
+                                <button class="btn btn-info" onclick="getUserById(${usuario.ID_CLIENTE})">Editar</button>
+                                <button class="btn btn-danger" onclick="deleteUser(${usuario.ID_CLIENTE})">Excluir</button>
+                            </td>`;
+                        userTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Erro ao obter usuários:', error));
+        }
+
+        function getUserById(id) {
+            // Preencha os campos de atualização com os dados do usuário
+            const updateIdInput = document.getElementById('update-id');
+            updateIdInput.value = id;
+
+            // Adapte conforme necessário para obter os detalhes do usuário
+            // e preencher outros campos no formulário de atualização
+
+            // Exemplo:
+            // fetch(`http://localhost:3000/usuarios/${id}`)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         // Preencher campos no formulário de atualização
+            //         // Exemplo: document.getElementById('update-nome').value = data.usuario.NOME_CLIENTE;
+            //     })
+            //     .catch(error => console.error('Erro ao obter detalhes do usuário:', error));
+        };
+
+        function deleteUser(id) {
+            const deleteIdInput = document.getElementById('delete-id');
+            const userId = id || deleteIdInput.value;
+
+            // Chame a API para excluir o usuário
+            fetch(`http://localhost:3000/usuarios/${userId}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    // Recarregar a tabela após a exclusão
+                    location.reload();
+                })
+                .catch(error => console.error('Erro ao excluir usuário:', error));
+        }
+
+        // Adicione a lógica de atualização de usuário conforme necessário
+        document.getElementById('update-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const updateId = document.getElementById('update-id').value;
+
+            // Chame a API para atualizar o usuário
+            // Adaptar conforme necessário para enviar os dados atualizados
+            // fetch(`http://localhost:3000/usuarios/${update
+            });
