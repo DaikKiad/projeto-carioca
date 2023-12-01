@@ -72,18 +72,27 @@ app.get('/usuarios/:id', (req, res) => {
     });
 });
 
-app.get('/usuarios/:id', (req, res) => {
+app.put('/usuarios/:id', (req, res) => {
     const userId = req.params.id;
-    db.query('SELECT * FROM conta_cliente WHERE ID_CLIENTE = ?', userId, (err, results) => {
+    const { NOME_CLIENTE, SEXO, CPF, EMAIL_CLIENTE, SENHA, ENDERECO_CLIENTE } = req.body;
+
+    const sql = `
+        UPDATE conta_cliente
+        SET NOME_CLIENTE = ?, SEXO = ?, CPF = ?, EMAIL_CLIENTE = ?, SENHA = ?, ENDERECO_CLIENTE = ?
+        WHERE ID_CLIENTE = ?
+    `;
+
+    db.query(sql, [NOME_CLIENTE, SEXO, CPF, EMAIL_CLIENTE, SENHA, ENDERECO_CLIENTE, userId], (err, result) => {
         if (err) {
-            console.error('Erro ao buscar usuário: ' + err);
-            return res.status(500).json({ success: false, message: 'Erro ao buscar usuário' });
+            console.error('Erro ao atualizar usuário: ' + err);
+            return res.status(500).json({ success: false, message: 'Erro ao atualizar usuário' });
         }
-        if (results.length === 0) {
+
+        if (result.affectedRows === 0) {
             return res.status(404).json({ success: false, message: 'Usuário não encontrado' });
         }
-        const usuario = results[0];
-        res.json({ success: true, usuario: usuario });
+
+        res.json({ success: true, message: 'Usuário atualizado com sucesso.' });
     });
 });
 

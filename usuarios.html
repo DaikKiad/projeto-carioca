@@ -17,31 +17,31 @@
         body {
             padding: 20px;
         }
-    
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-    
+
         th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
-    
+
         th {
             background-color: #f2f2f2;
         }
-    
+
         button {
             margin-right: 5px;
         }
-    
+
         form {
             margin-top: 20px;
         }
-    
+
         .btn-primary, .btn-success, .btn-info, .btn-danger {
             --bs-btn-color: #fff;
             --bs-btn-bg: #7464a1;
@@ -58,11 +58,11 @@
             --bs-btn-disabled-bg: #7464a1;
             --bs-btn-disabled-border-color: #7464a1;
         }
-    
+
         .btn-primary:hover, .btn-success:hover, .btn-info:hover, .btn-danger:hover {
             --bs-btn-bg: #635589;
         }
-    </style>    
+    </style>
 </head>
 
 <body>
@@ -81,22 +81,23 @@
         <tbody id="user-table-body"></tbody>
     </table>
 
-    <h3>Atualizar Usuário</h3>
-    <form id="update-form">
+    <h3>Operações de Usuário</h3>
+    <form id="user-form">
         <div class="form-group">
-            <label for="update-id">ID do Usuário:</label>
-            <input type="text" class="form-control" id="update-id" name="update-id" required>
+            <label for="user-id">ID do Usuário:</label>
+            <input type="text" class="form-control" id="user-id" name="user-id" required>
         </div>
         <button type="button" class="btn btn-primary" onclick="getUserById()">Buscar Usuário</button>
         <div class="form-group">
-            <label for="update-nome">Novo Nome:</label>
-            <input type="text" class="form-control" id="update-nome" name="update-nome" required>
+            <label for="user-nome">Nome:</label>
+            <input type="text" class="form-control" id="user-nome" name="user-nome" required>
         </div>
         <div class="form-group">
-            <label for="update-email">Novo Email:</label>
-            <input type="email" class="form-control" id="update-email" name="update-email" required>
+            <label for="user-email">Email:</label>
+            <input type="email" class="form-control" id="user-email" name="user-email" required>
         </div>
         <button type="submit" class="btn btn-success">Atualizar Usuário</button>
+        <button type="button" class="btn btn-danger" onclick="deleteUser()">Excluir Usuário</button>
     </form>
 
     <h3>Excluir Usuário</h3>
@@ -111,6 +112,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             loadUserTable();
+            document.getElementById('user-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                updateUser();
+            });
         });
 
         function loadUserTable() {
@@ -136,64 +141,69 @@
         }
 
         function getUserById(id) {
-    const updateIdInput = document.getElementById('update-id');
-    updateIdInput.value = id;
+            const updateIdInput = document.getElementById('user-id');
+            const userId = id || updateIdInput.value;
 
-    fetch(`http://localhost:3000/usuarios/${id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Erro na solicitação: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.usuario) {
-                const usuario = data.usuario;
-                document.getElementById('update-nome').value = usuario.NOME_CLIENTE || '';
-                document.getElementById('update-email').value = usuario.EMAIL_CLIENTE || '';
-            } else {
-                console.error('Usuário não encontrado na resposta do servidor.');
-            }
-        })
-        .catch(error => console.error('Erro ao obter detalhes do usuário:', error));
-};
+            fetch(`http://localhost:3000/usuarios/${userId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro na solicitação: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.usuario) {
+                        const usuario = data.usuario;
+                        document.getElementById('user-nome').value = usuario.NOME_CLIENTE || '';
+                        document.getElementById('user-email').value = usuario.EMAIL_CLIENTE || '';
+                    } else {
+                        console.error('Usuário não encontrado na resposta do servidor.');
+                    }
+                })
+                .catch(error => console.error('Erro ao obter detalhes do usuário:', error));
+        }
 
-    function deleteUser(id) {
-    const deleteIdInput = document.getElementById('delete-id');
-    const userId = id || deleteIdInput.value;
+        function updateUser() {
+            const updateIdInput = document.getElementById('user-id');
+            const userId = updateIdInput.value;
+            const updateNome = document.getElementById('user-nome').value;
+            const updateEmail = document.getElementById('user-email').value;
 
-    fetch(`http://localhost:3000/usuarios/${userId}`, { method: 'DELETE' })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            location.reload();
-        })
-        .catch(error => console.error('Erro ao excluir usuário:', error));
-}
+            fetch(`http://localhost:3000/usuarios/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    NOME_CLIENTE: updateNome,
+                    EMAIL_CLIENTE: updateEmail,
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro na solicitação: ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                })
+                .catch(error => console.error('Erro ao atualizar usuário:', error));
+        }
 
-    document.getElementById('update-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const updateId = document.getElementById('update-id').value;
-    const updateNome = document.getElementById('update-nome').value;
-    const updateEmail = document.getElementById('update-email').value;
+        function deleteUser(id) {
+            const deleteIdInput = document.getElementById('delete-id');
+            const userId = id || deleteIdInput.value;
 
-    fetch(`http://localhost:3000/usuarios/${updateId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            NOME_CLIENTE: updateNome,
-            EMAIL_CLIENTE: updateEmail,
-        }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-            location.reload();
-        })
-        .catch(error => console.error('Erro ao atualizar usuário:', error));
-});
+            fetch(`http://localhost:3000/usuarios/${userId}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                })
+                .catch(error => console.error('Erro ao excluir usuário:', error));
+        }
     </script>
 </body>
 
