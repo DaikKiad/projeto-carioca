@@ -10,7 +10,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -22,38 +22,27 @@
 
 <body>
     <header>
-        <nav class="container">
-            <a class="navbar-brand" href="./index.html"><img src="assets\img/icone park easy.png" alt="logo"></a>
-            <div class="logo-box">
-                </a>
+        <nav class="navbar navbar-expand-lg navbar-light sticky-top fixed-top" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="./index.html"><img src="assets\img/icone park easy.png" alt="logo"></a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="./estacionamentos.html">Estacionamentos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./login.html">Fazer login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./sobre.html">Sobre nós</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./contato.html">Nos contate</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="parent-link">
-                <a href="./estacionamentos.html" class="social-links">Estacionamentos</a>
-                <a href="./login.html" class="social-links">Fazer login</a>
-                <a href="./sobre.html" class="social-links">Sobre nós</a>
-                <a href="./contato.html" class="social-links">Nos contate</a>
-            </div>
-            <!-- opcional icones de rede social (preferi tirar)-->
-            <!--<div class="icon">
-            <a href="https://www.instagram.com" target="_blank" class="sm-icon">
-                <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-            <a href="https://www.twitter.com" target="_blank" class="sm-icon">
-                <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-            <a href="https://www.github.com" target="_blank" class="sm-icon">
-                <ion-icon name="logo-github"></ion-icon>
-            </a>
-            <a href="https://www.tiktok.com" target="_blank" class="sm-icon">
-                <ion-icon name="logo-tiktok"></ion-icon>
-            </a>
-            <a href="https://www.youtube.com" target="_blank" class="sm-icon">
-                <ion-icon name="logo-youtube"></ion-icon>
-            </a>
-        </div>
-    -->
         </nav>
-    </header>
+        </nav>
+    <header>
     <div class="login">
         <form action="http://localhost:3000/login-usuario" method="post" class="sub-login">
             <div class="upper-login">
@@ -68,6 +57,7 @@
             </div>
             <div class="no-account">Ainda não tem uma conta? <a href="./cadastro.html" class="signup">Inscreva-se</a>
             </div>
+        </header>
         </form>
     </div>
 
