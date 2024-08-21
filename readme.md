@@ -29,5 +29,5 @@ Park Easy é uma plataforma que oferece os seguintes recursos:
 1. **Clone o Repositório**
 
    ```bash
-   git clone <URL_DO_REPOSITORIO>
+   git clone https://github.com/gusta-ve/ParkEasy.git
    cd park-easy
