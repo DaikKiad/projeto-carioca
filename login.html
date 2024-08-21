@@ -35,6 +35,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="./estacionamentos.html">Estacionamentos</a></li>
                         <li class="nav-item"><a class="nav-link" href="./login.html">Fazer login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./cadastroinfo.html">CadastreInfo</a></li>
                         <li class="nav-item"><a class="nav-link" href="./sobre.html">Sobre nós</a></li>
                         <li class="nav-item"><a class="nav-link" href="./contato.html">Nos contate</a></li>
                     </ul>
@@ -42,76 +43,78 @@
             </div>
         </nav>
         </nav>
-    <header>
-    <div class="login">
-        <form action="http://localhost:3000/login-usuario" method="post" class="sub-login">
-            <div class="upper-login">
-                <h2>Faça o Login</h2>
-                <label for="Usuario">Nome de Usuário</label> <br>
-                <input type="text" id="Usuario" name="Usuario" required placeholder="Insira seu nome de usuário"> <br>
-                <label for="Senha">Senha</label> <br>
-                <input type="password" id="Senha" name="Senha" required placeholder="Insira sua senha"> <br>
-            </div>
-            <div class="btn">
-                <button type="submit">Login</button> <br>
-            </div>
-            <div class="no-account">Ainda não tem uma conta? <a href="./cadastro.html" class="signup">Inscreva-se</a>
-            </div>
+        <header>
+            <div class="login">
+                <form action="http://localhost:3000/login-usuario" method="post" class="sub-login">
+                    <div class="upper-login">
+                        <h2>Faça o Login</h2>
+                        <label for="Usuario">Nome de Usuário</label> <br>
+                        <input type="text" id="Usuario" name="Usuario" required
+                            placeholder="Insira seu nome de usuário"> <br>
+                        <label for="Senha">Senha</label> <br>
+                        <input type="password" id="Senha" name="Senha" required placeholder="Insira sua senha"> <br>
+                    </div>
+                    <div class="btn">
+                        <button type="submit">Login</button> <br>
+                    </div>
+                    <div class="no-account">Ainda não tem uma conta? <a href="./cadastro.html"
+                            class="signup">Inscreva-se</a>
+                    </div>
         </header>
         </form>
-    </div>
+        </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('.sub-login');
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.querySelector('.sub-login');
 
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
 
-                const formData = new FormData(form);
+                    const formData = new FormData(form);
 
-                fetch('http://localhost:3001/autenticar-usuario', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showToast('Sucesso: ' + data.message, 'bg-success');
-                            window.location.href = '/login.html';
-                        } else {
-                            showToast('Erro: ' + data.message, 'bg-danger');
-                            form.reset();
-                        }
+                    fetch('http://localhost:3001/autenticar-usuario', {
+                        method: 'POST',
+                        body: formData
                     })
-                    .catch(error => {
-                        showToast('Erro na solicitação: ' + error, 'bg-danger');
-                        form.reset();
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showToast('Sucesso: ' + data.message, 'bg-success');
+                                window.location.href = '/login.html';
+                            } else {
+                                showToast('Erro: ' + data.message, 'bg-danger');
+                                form.reset();
+                            }
+                        })
+                        .catch(error => {
+                            showToast('Erro na solicitação: ' + error, 'bg-danger');
+                            form.reset();
+                        });
+                });
+
+                function showToast(message, bgColor) {
+                    const toast = document.createElement('div');
+                    toast.classList.add('toast', bgColor);
+                    toast.style.position = 'fixed';
+                    toast.style.top = '10px';
+                    toast.style.right = '10px';
+                    toast.setAttribute('role', 'alert');
+                    toast.setAttribute('aria-live', 'assertive');
+                    toast.setAttribute('aria-atomic', 'true');
+
+                    const toastBody = document.createElement('div');
+                    toastBody.classList.add('toast-body');
+                    toastBody.innerText = message;
+
+                    toast.appendChild(toastBody);
+                    document.body.appendChild(toast);
+
+                    $('.toast').toast({ 'autohide': false });
+                    $('.toast').toast('show');
+                }
             });
-
-            function showToast(message, bgColor) {
-                const toast = document.createElement('div');
-                toast.classList.add('toast', bgColor);
-                toast.style.position = 'fixed';
-                toast.style.top = '10px';
-                toast.style.right = '10px';
-                toast.setAttribute('role', 'alert');
-                toast.setAttribute('aria-live', 'assertive');
-                toast.setAttribute('aria-atomic', 'true');
-
-                const toastBody = document.createElement('div');
-                toastBody.classList.add('toast-body');
-                toastBody.innerText = message;
-
-                toast.appendChild(toastBody);
-                document.body.appendChild(toast);
-
-                $('.toast').toast({ 'autohide': false });
-                $('.toast').toast('show');
-            }
-        });
-    </script>
+        </script>
 
 </body>
 
