@@ -1,8 +1,8 @@
 {
-  "name": "projeto-carioca",
-  "description": "",
+  "name": "park-easy",
+  "description": "Uma aplicação web para encontrar vagas de estacionamento e realizar o cadastro de veículos e empresas.",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "apiautenticacao.js",
   "scripts": {
     "start:cadastro": "node ./js/apicadastro.js",
     "dev:cadastro": "nodemon ./js/apicadastro.js",
