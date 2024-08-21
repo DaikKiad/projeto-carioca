@@ -11,21 +11,6 @@
     justify-content: space-around;
 }
 
-
-.social-links:hover {
-    opacity: 0.8;
-}
-
-.sm-icon {
-    padding: 0 1rem;
-    margin: 0;
-    color: white;
-}
-
-.sm-icon:hover{
-    opacity: 0.8;
-}
-
 nav {
     font-size: 20px;
     font-weight: 700;
@@ -48,18 +33,6 @@ body {
     justify-content: center;
     padding-top: 3rem;
     margin-bottom: 0;
-}
-
-.sub-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 30vw;
-    height: 70vh;
-    border-radius: 12px;
-    box-shadow: rgba(50, 50, 93, 0,25) 0px 13px 27px -5px,
-     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-     background-color: white;
 }
 
 h2 {
@@ -103,12 +76,6 @@ button {
 
 button:hover {
     opacity: 0.8;
-}
-
-.bottom-form {
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
 }
 
 .signup {
@@ -196,12 +163,6 @@ button:hover {
     opacity: 0.8;
 }
 
-.bottom-cadastro {
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
-}
-
 .signup {
     padding-left: 5px;
     text-decoration: none;
@@ -224,7 +185,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-} 
+}
 
 .header {
     position: absolute;
@@ -248,15 +209,6 @@ body {
 
 .header a:hover {
     background-color: #1e87d0;
-}
-
-.logo-and-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    height: 100vh;
 }
 
 .navbar-brand {

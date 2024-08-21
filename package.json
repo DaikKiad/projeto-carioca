@@ -9,7 +9,8 @@
     "start:login": "node ./js/apilogin.js",
     "dev:login": "nodemon ./js/apilogin.js",
     "start:both": "concurrently \"npm run start:cadastro\" \"npm run start:login\"",
-    "dev:both": "concurrently \"npm run dev:cadastro\" \"npm run dev:login\""
+    "dev:both": "concurrently \"npm run dev:cadastro\" \"npm run dev:login\"",
+    "build:css": "postcss ./css/cadastro.css -o dist/cadastro.css"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,10 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@fullhuman/postcss-purgecss": "^6.0.0",
+    "nodemon": "^3.0.1",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
+    "postcss-nested": "^6.2.0"
   }
 }
